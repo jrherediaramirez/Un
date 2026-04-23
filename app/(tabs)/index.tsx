@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { QuickLogBar } from "@/components/quick-log-bar";
 import { useMessages, useSendMessage } from "@/hooks/use-chat";
 import { extractText, type MessageRow } from "@/lib/chat-types";
 
@@ -79,6 +80,7 @@ export default function ChatScreen() {
         {send.isError ? (
           <Text style={styles.error}>{(send.error as Error).message}</Text>
         ) : null}
+        <QuickLogBar />
         <View style={styles.composer}>
           <TextInput
             style={styles.input}
