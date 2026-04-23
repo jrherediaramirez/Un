@@ -1,0 +1,7 @@
+# Supabase CLI artifacts
+.branches
+.temp
+.env
+
+# Edge Function local env
+functions/**/.env
