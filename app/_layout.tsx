@@ -1,4 +1,5 @@
 import { DarkTheme, DefaultTheme, ThemeProvider } from "@react-navigation/native";
+import { QueryClientProvider } from "@tanstack/react-query";
 import { Stack, useRouter, useSegments } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
@@ -7,6 +8,7 @@ import "react-native-reanimated";
 
 import { AuthProvider, useAuth } from "@/hooks/use-auth";
 import { useColorScheme } from "@/hooks/use-color-scheme";
+import { queryClient } from "@/lib/query-client";
 
 export const unstable_settings = {
   anchor: "(tabs)",
@@ -41,17 +43,19 @@ export default function RootLayout() {
   const colorScheme = useColorScheme();
 
   return (
-    <AuthProvider>
-      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <AuthGate>
-          <Stack>
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="sign-in" options={{ headerShown: false }} />
-            <Stack.Screen name="modal" options={{ presentation: "modal", title: "Modal" }} />
-          </Stack>
-        </AuthGate>
-        <StatusBar style="auto" />
-      </ThemeProvider>
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+          <AuthGate>
+            <Stack>
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              <Stack.Screen name="sign-in" options={{ headerShown: false }} />
+              <Stack.Screen name="modal" options={{ presentation: "modal", title: "Modal" }} />
+            </Stack>
+          </AuthGate>
+          <StatusBar style="auto" />
+        </ThemeProvider>
+      </AuthProvider>
+    </QueryClientProvider>
   );
 }
